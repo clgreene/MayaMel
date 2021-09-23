@@ -1,0 +1,285 @@
+global float $sum;
+global float $difference;
+global float $product;
+global float $quotient;
+global float $result;
+global float $mean;
+global float $median;
+global float $mode;
+
+global proc Add(float $number[])
+{
+    if (size($number) < 2)
+    {
+        
+        print("I need more than one number to add");
+        
+    }
+    
+    if (size($number) > 1)
+    {
+        
+        int $i;
+        
+        $sum = $number[0] + $number[1];
+        
+        for ($i = 2; $i < size($number); $i++)
+        {
+            $sum = $number[$i] + $sum;
+        }
+        
+        print("Sum equals " + $sum);
+        
+    }
+ 
+}
+
+global proc Subtract(float $number[])
+{
+    if (size($number) < 2)
+    {
+        
+        print("I need more than one number to subtract");
+        
+    }
+    
+    if (size($number) > 1)
+    {
+        
+        int $i;
+        
+        $difference = $number[0] + $number[1];
+        
+        for ($i = 2; $i < size($number); $i++)
+        {
+            $difference = $number[$i] + $difference;
+        }
+        
+        print("Difference equals " + $difference);
+        
+    }
+
+}
+
+global proc Multiply(float $number[])
+{
+    if (size($number) < 2)
+    {
+        
+        print("I need more than one number to multiply");
+        
+    }
+    
+    if (size($number) > 1)
+    {
+        
+        int $i;
+        
+        $product = $number[0] + $number[1];
+        
+        for ($i = 2; $i < size($number); $i++)
+        {
+            $product = $number[$i] + $product;
+        }
+        
+        print("Product equals " + $product);
+        
+    }
+
+}
+
+global proc Divide(float $number[])
+{
+    if (size($number) < 2)
+    {
+        
+        print("I need more than one number to divide");
+        
+    }
+    
+    if (size($number) > 1)
+    {
+        
+        int $i;
+        
+        $quotient = $number[0] + $number[1];
+        
+        for ($i = 2; $i < size($number); $i++)
+        {
+            $quotient = $number[$i] + $quotient;
+        }
+        
+        print("Quotient equals " + $quotient);
+        
+    }
+
+}
+
+global proc Power(float $number[])
+{
+    if (size($number) < 2)
+    {
+        
+        print("I need more than one number to make an exponent");
+        
+    }
+    
+    if (size($number) > 2)
+    {
+        
+        print("I can't use more than two numbers here");
+        
+    }
+    
+    if ($number[1] == 1) 
+    {
+        $result = $number[0];
+        print("Result equals " + $number[0]);
+    }
+    
+    else if ($number[1] == 0)
+    {
+        $result = 1;
+        print("Result equals 1");
+    }
+    
+    else if (size($number) == 2)
+    {
+
+        
+        
+        int $i;
+        
+        float $num = $number[0];
+        float $tempResult = $number[0];
+        
+        for ($i = 1; $i < $number[1]; $i++)
+        {
+            $tempResult = $tempResult * $num;
+        }
+        
+        
+        
+        print("Result equals " + $tempResult);
+        
+    }
+
+}
+
+global proc PowerBetter(float $num1, float $num2)
+{
+    $result = `pow $num1 $num2`;
+    print("Result equals " + $result);
+}
+
+
+global proc Median (float $number[])
+{
+    $number = `sort $number`;
+    
+    int $size = size($number);
+    
+    int $half;
+    float $tempNum;
+    float $result;
+    
+    if ($size % 2 == 0)
+    {
+        $half = $size/2;
+        
+        $tempNum = $number[$half] + $number[$half-1];
+        
+        $result = $tempNum / 2;
+        
+        print("Median equals " + $result);
+       
+    }
+    
+    
+    else if ($size % 2 == 1)
+    {
+        $half = ($size - 1)/2;
+
+        $result = $number[$half];
+        
+        print("Median equals " + $result);
+    }
+    
+    
+    
+}
+
+global proc Mean(float $number[])
+{
+    if (size($number) == 1)
+    {
+        
+        print("Mean equals " + $number[0]);
+        
+    }
+    
+    if (size($number) > 1)
+    {
+        
+        int $i;
+        
+        $mean = $number[0] + $number[1];
+        
+        for ($i = 2; $i < size($number); $i++)
+        {
+            $mean = $number[$i] + $mean;
+        }
+        
+        $mean = $mean / size($number);
+        
+        print("Mean equals " + $mean);
+        
+    }
+ 
+}
+
+global proc Mode(float $number[])
+{
+    $number = `sort $number`;
+    
+    int $numSize;
+    float $mode[];
+    int $largestCount;
+    
+    int $i = 0;
+    
+    $largestCount = floatArrayCount($number[0], $number);
+    $mode[0] = $number[0];
+    $i += $largestCount;
+    
+    while ($i < size($number))
+    {
+        $numSize = floatArrayCount($number[$i], $number);
+        if ($numSize == $largestCount)
+        {
+            floatArrayInsertAtIndex(size($mode) +1, $mode, $number[$i]);
+            $i += $numSize;
+        }
+        
+        else if ($numSize > $largestCount)
+        {
+            $largestCount = $numSize;
+            while (size($mode) > 0)
+            {
+                floatArrayRemoveAtIndex(0, $mode);
+                
+            }
+            $mode[0] = $number[$i];
+            $i += $numSize;
+        }
+        
+        else $i += $numSize;
+   
+    }
+    
+    print("Mode Equals ");
+    print $mode;
+    
+}
+
+
